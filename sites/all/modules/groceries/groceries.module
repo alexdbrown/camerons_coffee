@@ -1,0 +1,63 @@
+<?php
+
+function groceries_menu()
+
+{
+    $items = array();
+    $items['grocery_list'] = array(
+            'title' => "Grocery List",
+            'page callback' => 'grocery_list',
+            'access callback' => TRUE,
+            'type' => MENU_NORMAL_ITEM,
+    );
+    return $items;
+}
+
+function grocery_items() {
+    $list['groceries'] = array(
+        'Eggs' => array(
+            'price' => 1.99,
+            'amount' => 2,
+        ),
+        'Milk' => array(
+            'price' => 3.48,
+            'amount' => 1,
+        ),
+        'Bananas' => array(
+            'price' => 1.50,
+            'amount' => 6,
+        ),
+    );
+    return $list;
+}
+
+function grocery_list() {
+    $my_groceries = grocery_items();
+    $result = "";
+    $cost = 0;
+    $quantity = 0;
+    $total_groceries = 0;
+    foreach ($my_groceries as $grocery_item => $item_information) {
+        // var_dump($item_information);
+        // var_dump($grocery_item);
+        foreach ($item_information as $nourishment => $attribute) {
+            $result .= "<h2> $nourishment </h2>";
+            foreach ($attribute as $key => $value) {
+                if ($key == 'price') {
+                    $result .= "<li> Price: $$value </li>";
+                    $cost += $value;
+                } elseif ($key == 'amount') {
+                    $result .= "<li> Quantity: $value </li>";
+                    $quantity += $value;
+                }
+            }
+        $total_cost = $cost * $value;
+        $result .= "<li>Total Cost = $$total_cost </li>";
+        $total_groceries += $total_cost;
+        $cost = 0;
+        $quantity = 0;
+        }
+    }
+    $result .= "<h3> Total groceries cost: $$total_groceries </h3>";
+    return $result;
+}
